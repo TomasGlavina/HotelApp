@@ -17,7 +17,7 @@ void checkout(vector<Room>&, vector<Customer>&); //checks out the customer, prin
 int checkHotelAvailability(vector<Room>); //checks at the beginning of the program if there is any room available
 void check_room(vector<Room>); //returns true if the specific room is available.
 void print_invoice(vector<Room>, vector<Customer>, int); //prints an invoice with all the information of the reservation.
-float check_discount(int, int); //returns a discount of 0, 10, 15 or 20% if it matches the criteria.
-int price_calculator(int, int, float); //returns the net price (I believe there is no need for a gross price function since it's so basic).
+float check_discount(Room, Customer); //returns a discount of 0, 10, 15 or 20% if it matches the criteria.
+float price_calculator(float, int, float); //returns the net price (I believe there is no need for a gross price function since it's so basic).
 
 
