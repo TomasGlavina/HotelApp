@@ -82,6 +82,30 @@ float price_calculator(float price, int nights, float discount) {     //Self exp
     return (price * (static_cast<float>(nights)) * (1.0 - discount));
 }
 
+int select_room_type() {  // returns the type of room 1(single), 2 (double)
+    int input;
+    do {
+        cout << "Would you like a single or a double room?" << endl
+            << "Please select 1 for single room or 2 for double room." << endl
+            << "Select 0 to exit." << endl;
+        cin >> input;
+        while (cin.fail()) {   //Again, cin.fail to check if its integer
+            cout << "That's not a real number! \nPlease select 1 or 2." << endl;
+            cin.clear();
+            cin.ignore(256, '\n');
+            cin >> input;
+        }
+
+        if (input == 0) {
+            return 0;
+        }
+        
+    } while (input != 1 && input != 2); //Checking that it is the correct output
+
+    return input;
+
+}
+
 void reserve_room(vector<Room>& hotel, vector<Customer>& customer, int customer_number) {
 /* To reserve a room, first I ask what type of room they want to take, then check if its available,
  then the user choses the room number and checks again if that room is available.
@@ -163,7 +187,7 @@ After selecting the room and checking that the type and number are free, it give
                     cout << "That's not a real number! \nPlease select chose a valid room number." << endl;
                     cin.clear();
                     cin.ignore(256, '\n');
-                    cin >> input;
+                    cin >> room_number;
                 }
                 //Since it's type 1(single), the room must be positive integer and odd.
             } while (room_number <= 0 && printf("Wrong room number, please select again.\n") || room_number % 2 == 0 && printf("Wrong room number, please select again.\n") || room_number > (hotel.size() + 1) && printf("Wrong room number, please select again.\n"));
@@ -189,12 +213,12 @@ After selecting the room and checking that the type and number are free, it give
         cout << "How many nights are you staying in the hotel?" << endl;
         cin >> nights;
         while (cin.fail()) {                                                        
-            cout << "That's not a real number! \nPlease select chose a valid room number." << endl;
+            cout << "That's not a real number! \nPlease select chose a valid number: " << endl;
             cin.clear();
             cin.ignore(256, '\n');
             cin >> nights;
         }
-    } while (nights < 1 && printf("You can't stay less than 1 night, please try again."));
+    } while (nights < 1 && printf("You can't stay less than 1 night, please try again.\n"));
 
 
 
@@ -214,29 +238,7 @@ After selecting the room and checking that the type and number are free, it give
     hotel[room_number - 1].free = false;
 
     //Here I explain that the booking number is important to checkout.
-    cout << "Thank you, " << hotel[room_number - 1].customer.name << ", your booking number is " << hotel[room_number - 1].customer.booking_number << ". \nDon't lose it! You need it to checkout.\n";
-}
-
-int select_room_type() {  // returns the type of room 1(single), 2 (double)
-    int input;
-    do {
-        cout << "Would you like a single or a double room?" << endl
-            << "Please select 1 for single room or 2 for double room." << endl
-            << "Select 0 to exit." << endl;
-        cin >> input;
-        if (input == 0) {
-            return 0;
-        }
-        while (cin.fail()) {   //Again, cin.fail to check if its integer
-            cout << "That's not a real number! \nPlease select 1 or 2." << endl;
-            cin.clear();
-            cin.ignore(256, '\n');
-            cin >> input;
-        }
-    } while (input != 1 && input != 2); //Checking that it is the correct output
-
-    return input;
-
+    cout << endl << "Thank you, " << hotel[room_number - 1].customer.name << ", your booking number is " << hotel[room_number - 1].customer.booking_number << ". Don't lose it! You need it to checkout." << endl << endl;
 }
 
 void check_room(vector<Room> hotel) { //checks if the room is free or not and prints it to the user. (The hotel is not legally entitled to give any personal information, so it only prints if its free or not)
@@ -245,18 +247,19 @@ void check_room(vector<Room> hotel) { //checks if the room is free or not and pr
     do {
         cout << "Please enter the number of the room: (Enter 0 to exit)" << endl;
         cin >> room_nro;
-        if (room_nro == 0) return;
-
         while (cin.fail()) {
-            cout << "Thats not a number! \nPlease enter an integer number from 1 to " << hotel.size();
+            cout << "Thats not a number! \nPlease enter an integer number from 1 to " << hotel.size() << ": ";
             cin.clear();
             cin.ignore(256, '\n');
             cin >> room_nro;
         }
+
+        if (room_nro == 0) return;
+   
     } while (room_nro < 1 || room_nro > hotel.size());
 
-    if (is_room_available(hotel, room_nro)) cout << "The room " << room_nro << " is free." << endl << endl;
-    else if (!is_room_available(hotel, room_nro)) cout << "The room " << room_nro << " is not available." << endl << endl;
+    if (is_room_available(hotel, room_nro)) cout << endl << "The room " << room_nro << " is free." << endl << endl;
+    else if (!is_room_available(hotel, room_nro)) cout << endl << "The room " << room_nro << " is not available." << endl << endl;
 }
 
 bool is_room_available(vector<Room> hotel, int room_nro) { //Returns true or false if the room is free
@@ -277,36 +280,38 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
     do {
         cout << "Now enter your booking number:" << endl;
         cin >> booking_number;
-        if (booking_number == 0) return;
-
         while (cin.fail()) {
             cout << "Thats not a number! \nPlease enter an integer number: ";
             cin.clear();
             cin.ignore(256, '\n');
             cin >> booking_number;
         }
+
+        if (booking_number == 0) return;
+
     } while (booking_number < 1);
 
     do {
         cout << "Now enter your room number:" << endl;
         cin >> room_number;
-        if (room_number == 0) return;
-
         while (cin.fail()) {
-            cout << "Thats not a number! \nPlease enter an integer number from 1 to " << hotel.size();
+            cout << "Thats not a number! \nPlease enter an integer number from 1 to " << hotel.size() << ": ";
             cin.clear();
             cin.ignore(256, '\n');
             cin >> room_number;
         }
+
+        if (room_number == 0) return;
+
     } while (room_number < 1 || room_number > hotel.size());
 
     //checking that the chosen room is actually taken.
     if (hotel[room_number - 1].free) {
-        cout << "There is no customer in that room.";
+        cout << endl << "There is no customer in that room." << endl << endl;
     }
     else if(hotel[room_number-1].customer.booking_number == booking_number) //checking that the booking number of the room number entered,
     {                                                                       // matches with the booking number entered.
-        cout << "Thank you for staying, we hope you had a great time.\n" << endl;
+       
         print_invoice(hotel, customer, room_number);
 
         customer.erase(     //deleting the customer from the vector
@@ -316,10 +321,12 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
         customer.end());
         customer.push_back(Customer()); //adding an empty customer to have still the same amount of possible customers as rooms.
         hotel[room_number - 1].free = true;
+
+        cout << endl << "Thank you for staying, we hope you had a great time.\n" << endl;
     }
     else {
-        cout << "Error, booking number doesn't match with the bookoing number of the room entered.\n" <<
-            "Returning to the option selection." << endl;
+        cout << endl << "ERROR: booking number doesn't match with the bookoing number of the room entered.\n" <<
+            "Returning to the option selection." << endl << endl;
     }
 
 }
@@ -332,24 +339,25 @@ void print_invoice(vector<Room> hotel, vector<Customer> customer, int room) {
 
 
     if (hotel[room - 1].free) {     //first I check if the room is actually taken or not
-        cout << "No one is staying in that room." << endl;
+        cout << endl << "No one is staying in that room." << endl;
         return;
     }
     //if it is taken, I proceed to print the invoice for the person staying there.
-    cout << "\nINVOICE \nTAMK Hotel OY\nKuntokatu 3, \n33520 Tampere" << endl
+    cout << "\n--------------------------------------------------" << endl
+        << "INVOICE \nTAMK Hotel OY\nKuntokatu 3, \n33520 Tampere" << endl
         << "\nBill to: " << hotel[room - 1].customer.name << "     Booking number: " << hotel[room - 1].customer.booking_number << endl
-        << endl << "Room: " << room << "        Room type: "<< hotel[room-1].room_type << "      Nights: " << hotel[room-1].customer.nights_staying 
-        << endl <<"SUBTOTAL: $"<< gross_price 
+        << "Room: " << room << "        Room type: "<< hotel[room-1].room_type << "      Nights: " << hotel[room-1].customer.nights_staying 
+        << endl << endl <<"SUBTOTAL: $"<< gross_price 
         << endl << "DISCOUNT: " << discount*100 <<"%"
-        << endl << "TOTAL: $" << price_calculator(hotel[room-1].price, hotel[room - 1].customer.nights_staying, discount)<< endl << endl;
+        << endl << "TOTAL: $" << price_calculator(hotel[room-1].price, hotel[room - 1].customer.nights_staying, discount)<< endl 
+        << "------------------------------------------------------" << endl;
         
 }
 
 int choose_option() {
     int option;
     do {
-        cout << "Welcome to TAMK's hotel online service!" << endl
-            << "What would you like to do? (Enter the number)" << endl
+        cout << "What would you like to do? (Enter the number)" << endl
             << "1. Reserve a room." << endl
             << "2. Search a specific room." << endl
             << "3. Checkout." << endl
@@ -415,9 +423,14 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
     int selected_option;
     int customer_number = 0;
 
+    cout  << "Welcome to TAMK's hotel online service!" << endl
+        << "Our hotel consists of " << hotel.size() << " rooms, we currently have single and double rooms." << endl
+        << "Our prices are: $100 per night for the single room and for the double room is 150$ per night." << endl;
 
     //An infinite loop that only breaks if the hotel is full or the user selects 0.
     while (true) {
+        
+
         //While there is rooms available, you can continue reserving
         // by calling the chose_option() 
         if (checkHotelAvailability(hotel) != 0) selected_option = choose_option();
