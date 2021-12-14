@@ -2,12 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <ctime>
 #include "ClassAssigment.h"
 using namespace std;
 
-/*Hi, I am Tomás Glavinaand this is my Hotel Room Reservation project, I aim to the 5 so the program will be according to the requirements.
-Aswell, I will add some functionalities
+/*Hi, I am Tomás Glavina and this is my Hotel Room Reservation project, I aim to the 5 so the program will be according to the requirements.
+As well, I will add some functionalities
 The program works as a Hotel program where the user gets the option to reserve a room, 
 the user can check before hand if the specific room is available and also the user gets the choice
 to check out, if the user knows the booking number reservation, which is printed in the invoice (it is assumed in this project that 
@@ -147,7 +146,7 @@ After selecting the room and checking that the type and number are free, it give
         }
     }
 
-    // here, after checking all rooms available of that type, if there is 0 available, the user selects wether to continue or not.
+    // here, after checking all rooms available of that type, if there is 0 available, the user selects whether to continue or not.
     if (rooms_available == 0) {
         do {
             cout << "There is no room available of that type." << endl
@@ -176,11 +175,11 @@ After selecting the room and checking that the type and number are free, it give
 
     /*Then we ask for the room number, according with which room type they chose.
     In this input checking, I made an algorithm that checks if the input was indeed an integer. 
-    The cin.fail() algorithm is explained here and it will be repeted in every input part of this program, so I won't repeat what it is each time.*/
+    The cin.fail() algorithm is explained here and it will be repeated in every input part of this program, so I won't repeat what it is each time.*/
     do {
         if (input == 1) {
             do {
-                cout << "For convinience of the customer, single rooms are odd numbered (1, 3, 5... etc)" << endl
+                cout << "For convenience of the customer, single rooms are odd numbered (1, 3, 5... etc)" << endl
                     << "Which room would you like to reserve?" << endl;
                 cin >> room_number;
                 while (cin.fail()) {  //I use cin.fail() to check if the input was indeed an integer, if not, I clear the input and ask again                                                      
@@ -194,7 +193,7 @@ After selecting the room and checking that the type and number are free, it give
         }
         else if (input == 2) {
             do {
-                cout << "For convinience of the customer, double rooms are even nuembered (2, 4, 6... etc)" << endl
+                cout << "For convenience of the customer, double rooms are even numbered (2, 4, 6... etc)" << endl
                     << "Which room would you like to reserve?" << endl;
                 cin >> room_number;
                 while (cin.fail()) {                                                        
@@ -271,7 +270,7 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
     int room_number;
     int booking_number;
 
-    /*The checkout procedure is basicand straight foward, you give your booking numberand room number
+    /*The checkout procedure is basic and straight forward, you give your booking number and room number
      and if the customer has both the room and booking number (meaning if they match with same customer)
      the checkout starts, printing the invoice(is assumed they pay automatically), deleting the customer,
      and setting the room as free.
@@ -325,7 +324,7 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
         cout << endl << "Thank you for staying, we hope you had a great time.\n" << endl;
     }
     else {
-        cout << endl << "ERROR: booking number doesn't match with the bookoing number of the room entered.\n" <<
+        cout << endl << "ERROR: booking number doesn't match with the booking number of the room entered.\n" <<
             "Returning to the option selection." << endl << endl;
     }
 
@@ -333,7 +332,7 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
 
 void print_invoice(vector<Room> hotel, vector<Customer> customer, int room) {
     //Calculating discount and gross price first for easier cout
-    //Printing prices in $ because € doesnt print correctly(at least in my computer)
+    //Printing prices in $ because € doesn't print correctly(at least in my computer)
     float discount = check_discount(hotel[room - 1], hotel[room - 1].customer);
     float gross_price = hotel[room - 1].price * (static_cast<float>(hotel[room - 1].customer.nights_staying));
 
