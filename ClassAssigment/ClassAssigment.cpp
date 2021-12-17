@@ -545,17 +545,13 @@ int main()
         if (hotel[i].number % 2 == 0) {                 // if room number is even it gets the double type and 150€
             hotel[i].room_type = 2;
             hotel[i].price = 150;
-            hotel[i].free = false;
+            hotel[i].free = true;
         }
         else {                                          // if its odd, it gets the single type room and 100€ price
             hotel[i].room_type = 1;
             hotel[i].price = 100;
-            if (i < (amount_of_rooms - 2)) {
-                hotel[i].free =  false;
-            }
-            else {
-                hotel[i].free = true;
-            }
+            hotel[i].free =  true;
+           
         }
     }
 
