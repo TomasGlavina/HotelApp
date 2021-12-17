@@ -31,7 +31,7 @@ struct Room {
 
 
 
-bool is_hotel_empty(vector<Room> hotel) {
+bool isHotelEmpty(vector<Room> hotel) {
     int rooms_taken = 0;    //starts with the assumption that hotel is empty
     for (int i = 0; i < hotel.size(); i++) {    //loop, checking every room if they are taken or free 
         if (hotel[i].free == false) {
@@ -42,7 +42,7 @@ bool is_hotel_empty(vector<Room> hotel) {
     return false;
 }
 
-bool is_room_available(vector<Room> hotel, int room_nro) { //Returns true or false if the room is free
+bool isRoomAvailable(vector<Room> hotel, int room_nro) { //Returns true or false if the room is free
     if (hotel[room_nro - 1].free) return true;
     return false;
 }
@@ -57,7 +57,7 @@ int checkHotelAvailability(vector<Room> hotel) {        // this one returns the 
     return rooms_available;
 }
 
-float check_discount(Room room, Customer customer) {
+float checkDiscount(Room room, Customer customer) {
     /*The discounts go in this order --> 0-4 nights = 0%, 5-9 nighs = 5% and 10+ nights = 10%
     If the room is double, then the discount is double.
     Returns the discount in float type (10% = 0.1; 20% = 0.2)
@@ -82,7 +82,7 @@ float check_discount(Room room, Customer customer) {
     return discount;
 }
 
-float price_calculator(float price, int nights, float discount) {     //Self explanatory, only comment is that I casted the nights as float to get a float result.
+float priceCalculator(float price, int nights, float discount) {     //Self explanatory, only comment is that I casted the nights as float to get a float result.
     return (price * (static_cast<float>(nights)) * (1.0 - discount));
 }
 
@@ -112,7 +112,7 @@ bool isRoomTypeAvailable(vector<Room> hotel, int input) { //Algorithm that check
     return true;
 }
 
-int select_room_type(vector<Room> hotel) {  // returns the type of room 1(single), 2 (double)
+int selectRoomType(vector<Room> hotel) {  // returns the type of room 1(single), 2 (double)
     int input;
     int continue_or_not;
     do {
@@ -193,12 +193,12 @@ int randomRoomSelector(vector<Room>& hotel, int room_type) {
     if (room_type == 1) {
         do {
             room = 2*(rand() % hotel.size()/2) + 1;
-        } while (!(is_room_available(hotel, room)));
+        } while (!(isRoomAvailable(hotel, room)));
     }
     else if (room_type == 2) {
         do {
             room = 2 * (rand() % hotel.size()/2 + 1);
-        } while (!(is_room_available(hotel, room)));
+        } while (!(isRoomAvailable(hotel, room)));
     }
 
     cout << "You got assigned the room number: " << room << endl;
@@ -240,12 +240,12 @@ int manualRoomSelector(vector<Room>& hotel, int room_type) {
             } while (room_number <= 0 && printf("Wrong room number, please select again.\n") || room_number % 2 != 0 && printf("Wrong room number, please select again.\n") || room_number > (hotel.size() + 1) && printf("Wrong room number, please select again.\n"));
         }
         //Here I check that the room selected is actually free or not.
-    } while (!(is_room_available(hotel, room_number)) && printf("The selected room is not available, please select another one.\n"));
+    } while (!(isRoomAvailable(hotel, room_number)) && printf("The selected room is not available, please select another one.\n"));
 
     return room_number;
 }
 
-void reserve_room(vector<Room>& hotel, vector<Customer>& customer, int customer_number) {
+void reserveRoom(vector<Room>& hotel, vector<Customer>& customer, int customer_number) {
 /* To reserve a room, first I ask what type of room they want to take, then check if its available,
  then the user choses the room number and checks again if that room is available.
 After selecting the room and checking that the type and number are free, it gives the customer a name, room number and booking number.*/
@@ -264,7 +264,7 @@ After selecting the room and checking that the type and number are free, it give
 
     
     //First we ask to input 1 or 2, whether its a single or double room.
-    room_type = select_room_type(hotel);
+    room_type = selectRoomType(hotel);
 
     if (room_type == 0) { //if they decide not to continue
         return;
@@ -315,7 +315,7 @@ After selecting the room and checking that the type and number are free, it give
         "\nYour booking number is " << hotel[room_number - 1].customer.booking_number << ". Don't lose it! You need it to checkout." << endl << endl;
 }
 
-void check_room(vector<Room> hotel) { //checks if the room is free or not and prints it to the user. (The hotel is not legally entitled to give any personal information, so it only prints if its free or not)
+void checkRoom(vector<Room> hotel) { //checks if the room is free or not and prints it to the user. (The hotel is not legally entitled to give any personal information, so it only prints if its free or not)
     int room_nro;
     
     do {
@@ -332,8 +332,8 @@ void check_room(vector<Room> hotel) { //checks if the room is free or not and pr
    
     } while (room_nro < 1 || room_nro > hotel.size());
 
-    if (is_room_available(hotel, room_nro)) cout << endl << "The room " << room_nro << " is free." << endl << endl;
-    else if (!is_room_available(hotel, room_nro)) cout << endl << "The room " << room_nro << " is not available." << endl << endl;
+    if (isRoomAvailable(hotel, room_nro)) cout << endl << "The room " << room_nro << " is free." << endl << endl;
+    else if (!isRoomAvailable(hotel, room_nro)) cout << endl << "The room " << room_nro << " is not available." << endl << endl;
 }
 
 
@@ -383,7 +383,7 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
     else if(hotel[room_number-1].customer.booking_number == booking_number) //checking that the booking number of the room number entered,
     {                                                                       // matches with the booking number entered.
        
-        print_invoice(hotel, customer, room_number);
+        printInvoice(hotel, customer, room_number);
 
         customer.erase(     //deleting the customer from the vector
             remove_if(customer.begin(), customer.end(), [&](Customer const& x) {
@@ -402,10 +402,10 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
 
 }
 
-void print_invoice(vector<Room> hotel, vector<Customer> customer, int room) {
+void printInvoice(vector<Room> hotel, vector<Customer> customer, int room) {
     //Calculating discount and gross price first for easier cout
     //Printing prices in $ because € doesn't print correctly(at least in my computer)
-    float discount = check_discount(hotel[room - 1], hotel[room - 1].customer);
+    float discount = checkDiscount(hotel[room - 1], hotel[room - 1].customer);
     float gross_price = hotel[room - 1].price * (static_cast<float>(hotel[room - 1].customer.nights_staying));
 
 
@@ -420,12 +420,12 @@ void print_invoice(vector<Room> hotel, vector<Customer> customer, int room) {
         << "Room: " << room << "        Room type: "<< hotel[room-1].room_type << "      Nights: " << hotel[room-1].customer.nights_staying 
         << endl << endl <<"SUBTOTAL: $"<< gross_price 
         << endl << "DISCOUNT: " << discount*100 <<"%"
-        << endl << "TOTAL: $" << price_calculator(hotel[room-1].price, hotel[room - 1].customer.nights_staying, discount)<< endl 
+        << endl << "TOTAL: $" << priceCalculator(hotel[room-1].price, hotel[room - 1].customer.nights_staying, discount)<< endl 
         << "------------------------------------------------------" << endl;
         
 }
 
-int choose_option() {
+int chooseOption() {
     int option;
     do {
         cout << "What would you like to do? (Enter the number)" << endl
@@ -446,7 +446,7 @@ int choose_option() {
     return option;
 }
 
-void option_handler(vector<Room>& hotel, vector<Customer>& customer, int selected_option, int customer_number) {
+void optionHandler(vector<Room>& hotel, vector<Customer>& customer, int selected_option, int customer_number) {
     int room_number;
 
 
@@ -458,11 +458,11 @@ void option_handler(vector<Room>& hotel, vector<Customer>& customer, int selecte
             break;
         }
         else {
-            reserve_room(hotel, customer, customer_number);
+            reserveRoom(hotel, customer, customer_number);
             break;
         }
     case 2:
-        check_room(hotel);
+        checkRoom(hotel);
         break;
     case 3:
         checkout(hotel, customer);
@@ -471,7 +471,7 @@ void option_handler(vector<Room>& hotel, vector<Customer>& customer, int selecte
 
         //for this option, I decided to have some code here, because the invoice print function is also used for checkout
         //so I left print_invoice very basic and functional and put some code here.
-        if (is_hotel_empty(hotel)) {
+        if (isHotelEmpty(hotel)) {
             cout << "No customers int the hotel to make invoice at the moment.\n";
             break;
         }
@@ -491,7 +491,7 @@ void option_handler(vector<Room>& hotel, vector<Customer>& customer, int selecte
             break;
         }
 
-        print_invoice(hotel, customer, room_number);
+        printInvoice(hotel, customer, room_number);
         break;
     }
 }
@@ -511,13 +511,13 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
 
         //While there is rooms available, you can continue reserving
         // by calling the chose_option() 
-        selected_option = choose_option();
+        selected_option = chooseOption();
 
         
         if (selected_option == 0) break;
 
         //after the option is selected, its handled in this function
-        option_handler(hotel, customer, selected_option, customer_number);
+        optionHandler(hotel, customer, selected_option, customer_number);
 
         //this is just a method I made to handle customers, each time the loop goes through
         customer_number++;
