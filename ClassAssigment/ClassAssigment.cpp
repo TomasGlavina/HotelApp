@@ -468,7 +468,6 @@ void optionHandler(vector<Room>& hotel, vector<Customer>& customer, int selected
         checkout(hotel, customer);
         break;
     case 4:
-
         //for this option, I decided to have some code here, because the invoice print function is also used for checkout
         //so I left print_invoice very basic and functional and put some code here.
         if (isHotelEmpty(hotel)) {
@@ -507,13 +506,15 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
 
     //An infinite loop that only breaks if the hotel is full or the user selects 0.
     while (true) {
-        
-
         //While there is rooms available, you can continue reserving
         // by calling the chose_option() 
-        selected_option = chooseOption();
+        if (checkHotelAvailability(hotel) != 0) selected_option = choose_option();
 
-        
+        //but if hotel is full(the function returns the number of free rooms), then the program ends.
+        if (checkHotelAvailability(hotel) == 0) {
+            cout << "We are very sorry, the hotel is full at the moment. Come back another day. Thank you." << endl;
+            break;
+        }
         if (selected_option == 0) break;
 
         //after the option is selected, its handled in this function
@@ -550,15 +551,9 @@ int main()
         else {                                          // if its odd, it gets the single type room and 100€ price
             hotel[i].room_type = 1;
             hotel[i].price = 100;
-            if (i < (amount_of_rooms - 2)) {
-                hotel[i].free =  false;
-            }
-            else {
-                hotel[i].free = true;
-            }
+            hotel[i].free = true;
         }
     }
-
 
     //Now we start the user interface. 
     //Passing the hotel vector by reference to be able to modify it.
