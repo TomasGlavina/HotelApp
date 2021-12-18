@@ -508,7 +508,7 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
     while (true) {
         //While there is rooms available, you can continue reserving
         // by calling the chose_option() 
-        if (checkHotelAvailability(hotel) != 0) selected_option = choose_option();
+        if (checkHotelAvailability(hotel) != 0) selected_option = chooseOption();
 
         //but if hotel is full(the function returns the number of free rooms), then the program ends.
         if (checkHotelAvailability(hotel) == 0) {
