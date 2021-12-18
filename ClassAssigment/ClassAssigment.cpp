@@ -508,8 +508,13 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
     while (true) {
         //While there is rooms available, you can continue reserving
         // by calling the chose_option() 
-        selected_option = chooseOption();
-       
+        if (checkHotelAvailability(hotel) != 0) selected_option = choose_option();
+
+        //but if hotel is full(the function returns the number of free rooms), then the program ends.
+        if (checkHotelAvailability(hotel) == 0) {
+            cout << "We are very sorry, the hotel is full at the moment. Come back another day. Thank you." << endl;
+            break;
+        }
         if (selected_option == 0) break;
 
         //after the option is selected, its handled in this function
@@ -541,12 +546,12 @@ int main()
         if (hotel[i].number % 2 == 0) {                 // if room number is even it gets the double type and 150€
             hotel[i].room_type = 2;
             hotel[i].price = 150;
-            hotel[i].free = true;
+            hotel[i].free = false;
         }
         else {                                          // if its odd, it gets the single type room and 100€ price
             hotel[i].room_type = 1;
             hotel[i].price = 100;
-            hotel[i].free =  true;
+            hotel[i].free = true;
         }
     }
 
