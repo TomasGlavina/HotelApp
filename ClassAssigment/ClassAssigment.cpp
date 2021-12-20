@@ -2,10 +2,12 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <time.h>
+#include <algorithm>
 #include "ClassAssigment.h"
 using namespace std;
 
-/*Hi, I am Tomás Glavina and this is my Hotel Room Reservation project, I aim to the 5 so the program will be according to the requirements.
+/*Hi, I am TomÃ¡s Glavina and this is my Hotel Room Reservation project, I aim to the 5 so the program will be according to the requirements.
 As well, I will add some functionalities
 The program works as a Hotel program where the user gets the option to reserve a room, 
 the user can check before hand if the specific room is available and also the user gets the choice
@@ -404,7 +406,7 @@ void checkout(vector<Room>& hotel, vector<Customer>& customer) { //checks out th
 
 void printInvoice(vector<Room> hotel, vector<Customer> customer, int room) {
     //Calculating discount and gross price first for easier cout
-    //Printing prices in $ because € doesn't print correctly(at least in my computer)
+    //Printing prices in $ because Â€ doesn't print correctly(at least in my computer)
     float discount = checkDiscount(hotel[room - 1], hotel[room - 1].customer);
     float gross_price = hotel[room - 1].price * (static_cast<float>(hotel[room - 1].customer.nights_staying));
 
@@ -543,12 +545,12 @@ int main()
         customer.push_back(Customer());                 //Customer list gets as big as the hotel rooms, because eventually there will be as many customers as rooms
 
         hotel[i].number = i + 1;
-        if (hotel[i].number % 2 == 0) {                 // if room number is even it gets the double type and 150€
+        if (hotel[i].number % 2 == 0) {                 // if room number is even it gets the double type and 150Â€
             hotel[i].room_type = 2;
             hotel[i].price = 150;
             hotel[i].free = true;
         }
-        else {                                          // if its odd, it gets the single type room and 100€ price
+        else {                                          // if its odd, it gets the single type room and 100Â€ price
             hotel[i].room_type = 1;
             hotel[i].price = 100;
             hotel[i].free = true;
