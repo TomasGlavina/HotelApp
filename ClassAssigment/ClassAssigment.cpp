@@ -502,9 +502,17 @@ void start(vector<Room>& hotel, vector<Customer>& customer) {
     int selected_option;
     int customer_number = 0;
 
-    cout  << "Welcome to TAMK's hotel online service!" << endl
-        << "Our hotel consists of " << hotel.size() << " rooms, we currently have single and double rooms." << endl
-        << "Our prices are: $100 per night for the single room and for the double room is 150$ per night." << endl;
+    cout  << endl << "Welcome to the TAMK Hotel Online Service!" << endl << 
+	    R"(                 _ _.-'`-._ _
+                ;.'________'.;
+     _________n.[____________].n_________
+    |""_""_""_""||==||==||==||""_""_""_""]
+    |"""""""""""||..||..||..||"""""""""""|
+    |LI LI LI LI||LI||LI||LI||LI LI LI LI|
+    |.. .. .. ..||..||..||..||.. .. .. ..|
+    |LI LI LI LI||LI||LI||LI||LI LI LI LI|)" << endl << endl 
+	    << "Our hotel consists of " << hotel.size() << " rooms, we currently have single and double rooms." << endl
+        << "Our prices are: $100 per night for the single room and for the double room is 150$ per night." << endl << endl;
 
     //An infinite loop that only breaks if the hotel is full or the user selects 0.
     while (true) {
@@ -562,7 +570,7 @@ int main()
     start(hotel, customer);
 
 
-    cout << "Thank you for using our program! Hope we see you soon.";
+    cout << "Thank you for using our program! Hope we see you soon." << endl;
     return 0;
 
 }
